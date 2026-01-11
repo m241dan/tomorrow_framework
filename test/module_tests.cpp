@@ -96,10 +96,36 @@ struct TestCase<3> {
     }
 };
 
+template<>
+struct TestCase<4> {
+    using Module = MultiInputModule;
+    static constexpr auto description = "Simple many to one module that fans in to a single out channel and capitalizes the input"sv;
+    static constexpr auto GIVEN = "An string input value of `{}`"sv;
+    static constexpr auto WHEN = "we send the value on any of the input channels"sv;
+    static constexpr auto THEN = "that value will get passed through to a single out channel as a capitalized string."sv;
+    static constexpr auto number_of_input_channels = std::tuple_size_v<Module::AsioProcessor_t::InputEvents_t>;
+    static constexpr auto output_indexes_to_number_of_output_channels = std::array{
+        std::make_tuple(1, 1),
+    };
+
+    static constexpr auto get_data()
+    {
+        // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+        return std::array{
+            TestData<std::string, std::string>{
+                .input_value_to_input_index = {"hello", 0},
+                .output_indexes_to_output_values = {{1, "Hello"}}},
+            TestData<std::string, std::string>{
+                .input_value_to_input_index = {"world", 1},
+                .output_indexes_to_output_values = {{1, "World"}}}};
+        // NOLINTEND(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+    }
+};
+
 } // namespace test_support
 
 
-TEMPLATE_TEST_CASE("Testing TestCases", "[template]", test_support::TestCase<1>, test_support::TestCase<2>, test_support::TestCase<3>)
+TEMPLATE_TEST_CASE("Testing TestCases", "[template]", test_support::TestCase<1>, test_support::TestCase<2>, test_support::TestCase<3>, test_support::TestCase<4>)
 {
     // Setup Section
     auto ctx = boost::asio::io_context{};
