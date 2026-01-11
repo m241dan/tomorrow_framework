@@ -80,8 +80,10 @@ constexpr auto run_ctx(boost::asio::io_context& ctx, int times) -> void
 /*************************
  * Tomorrow Test Support *
  *************************/
-template<typename Input_t, typename Output_t>
+template<typename Input, typename Output>
 struct TestData {
+    using Input_t = Input;
+    using Output_t = Output;
     std::tuple<Input_t, int> input_value_to_input_index;
     std::map<int, Output_t> output_indexes_to_output_values;
 };

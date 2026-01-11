@@ -104,6 +104,7 @@ TEMPLATE_TEST_CASE("Testing TestCases", "[template]", test_support::TestCase<1>,
     // Setup Section
     auto ctx = boost::asio::io_context{};
     const auto test_data = GENERATE(from_range(TestType::get_data()));
+    using Output_t = typename decltype(test_data)::Output_t;
     static constexpr auto channel_size = 10;
     auto channels = test_support::setup_channels<TestType>(ctx.get_executor(), channel_size);
     auto module = typename TestType::Module{ctx.get_executor(), channels};
@@ -125,7 +126,7 @@ TEMPLATE_TEST_CASE("Testing TestCases", "[template]", test_support::TestCase<1>,
 
             THEN(TestType::THEN)
             {
-                std::vector<std::tuple<std::future<tmrw::GenericModuleData>, int>> received;
+                std::vector<std::tuple<std::future<tmrw::GenericModuleData>, Output_t>> received;
                 for (const auto [output_index, expected_value] : test_data.output_indexes_to_output_values)
                 {
                     for (const auto& channel : channels.outputs[output_index])
@@ -142,7 +143,7 @@ TEMPLATE_TEST_CASE("Testing TestCases", "[template]", test_support::TestCase<1>,
                         FAIL("Futures were not ready when expected.");
                     }
                     const auto gmd = future.get();
-                    const auto* actual = std::get<int>(gmd);
+                    const auto* actual = std::get<Output_t>(gmd);
 
                     REQUIRE(*actual == expected);
                 }
