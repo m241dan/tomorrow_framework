@@ -47,6 +47,25 @@ struct MultiplyingModule : public MultiplyingEventHandler, public tmrw::AsioProc
     MultiplyingModule(boost::asio::any_io_executor ex, tmrw::Channels channels);
 };
 
+/*
+ *
+ */
+// Event Handler
+struct MultiInputEvent1 : public tmrw::Event<std::string> {};
+struct MultiInputEvent2 : public tmrw::Event<std::string> {};
+struct MultiInputEventHandler {
+    static auto process(MultiInputEvent1 event) -> std::map<int, std::any>;
+    static auto process(MultiInputEvent2 event) -> std::map<int, std::any>;
+};
+
+// Module Setup
+using MultiInputEvents = tmrw::InputEvents<MultiInputEvent1, MultiInputEvent2>;
+struct MultiInputModule : public MultiInputEventHandler, public tmrw::AsioProcessor<MultiInputEventHandler, MultiInputEvents> {
+    using AsioProcessor_t = tmrw::AsioProcessor<MultiInputEventHandler, MultiInputEvents>;
+
+    MultiInputModule(boost::asio::any_io_executor ex, tmrw::Channels channels);
+};
+
 /*********************
  * Asio Test Support *
  *********************/

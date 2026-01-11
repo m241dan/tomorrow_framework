@@ -1,4 +1,5 @@
 #include "test_support/test_support.h"
+#include <cctype>
 
 namespace test_support {
 
@@ -29,5 +30,30 @@ MultiplyingModule::MultiplyingModule(boost::asio::any_io_executor ex, tmrw::Chan
 
 {
 }
+
+namespace {
+auto capitalize(std::string to_cap) -> std::string
+{
+    to_cap[0] = static_cast<char>(std::toupper(to_cap[0]));
+    return to_cap;
+}
+} // namespace
+//
+auto MultiInputEventHandler::process(MultiInputEvent1 event) -> std::map<int, std::any>
+{
+    return {{1, capitalize(std::move(event.data))}};
+}
+
+auto MultiInputEventHandler::process(MultiInputEvent2 event) -> std::map<int, std::any>
+{
+    return {{1, capitalize(std::move(event.data))}};
+}
+
+MultiInputModule::MultiInputModule(boost::asio::any_io_executor ex, tmrw::Channels channels)
+    : MultiInputEventHandler{}
+    , AsioProcessor_t{.executor = std::move(ex), .channels = std::move(channels)}
+{
+}
+
 
 } // namespace test_support
