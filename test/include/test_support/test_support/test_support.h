@@ -22,7 +22,6 @@ struct DoublingEventHandler {
 // Module Setup
 using DoublingInputEvents = tmrw::InputEvents<DoublingEvent>;
 struct DoublingModule : public DoublingEventHandler, public tmrw::AsioProcessor<DoublingEventHandler, DoublingInputEvents> {
-    using EventHandler_t = DoublingEventHandler;
     using AsioProcessor_t = tmrw::AsioProcessor<DoublingEventHandler, DoublingInputEvents>;
 
     DoublingModule(boost::asio::any_io_executor ex, tmrw::Channels channels);
@@ -41,7 +40,6 @@ struct MultiplyingEventHandler {
 // Module Setup
 using MultiplyingInputEvents = tmrw::InputEvents<MultiplyingEvent>;
 struct MultiplyingModule : public MultiplyingEventHandler, public tmrw::AsioProcessor<MultiplyingEventHandler, MultiplyingInputEvents> {
-    using EventHandler_t = MultiplyingEventHandler;
     using AsioProcessor_t = tmrw::AsioProcessor<MultiplyingEventHandler, MultiplyingInputEvents>;
 
     MultiplyingModule(boost::asio::any_io_executor ex, tmrw::Channels channels);
