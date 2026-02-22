@@ -36,3 +36,8 @@ add_executable(generic_module_data generic_module_data_tests.cpp)
 target_link_libraries(generic_module_data PRIVATE Catch2::Catch2WithMain tomorrow_framework::tomorrow_framework)
 target_compile_features(generic_module_data INTERFACE cxx_std_23)
 add_test(NAME GenericModuleDataTests COMMAND generic_module_data)
+
+add_executable(strand_tests strand_tests.cpp)
+target_link_libraries(strand_tests PRIVATE Catch2::Catch2WithMain tomorrow_framework::tomorrow_framework)
+target_compile_features(strand_tests INTERFACE cxx_std_23)
+add_test(NAME StrandTests COMMAND strand_tests)

@@ -79,14 +79,12 @@ struct AsioProcessor {
             /////////////////////////////
 
             auto [result, trace_context_to_send] = [&] {
-                if constexpr (supports_trace_context<EventHandler_t, data_type>) // NOLINT(bugprone-branch-clone)
+                if constexpr (supports_trace_context<EventHandler_t, data_type>)
                 {
-                    return std::make_tuple(std::forward<Self>(self).process(Event{std::move(data)}, std::move(trace_context)));
+                    return std::forward<Self>(self).process(Event{std::move(data)}, std::move(trace_context));
                 }
                 else
                 {
-                    // line is very subtly different, notice right--------------------------------|
-                    //                                                                            v
                     return std::make_tuple(std::forward<Self>(self).process(Event{std::move(data)}), std::move(trace_context));
                 }
             }();
