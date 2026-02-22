@@ -7,4 +7,4 @@ target_include_directories(tomorrow_framework
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(tomorrow_framework INTERFACE Boost::asio)
+target_link_libraries(tomorrow_framework INTERFACE Boost::asio glaze::glaze)

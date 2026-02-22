@@ -21,6 +21,7 @@ CPMAddPackage(
     OPTIONS "BOOST_ENABLE_CMAKE ON"
 )
 CPMAddPackage("gh:fmtlib/fmt#11.1.0")
+CPMAddPackage("gh:stephenberry/glaze@7.0.2")
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
