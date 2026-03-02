@@ -14,6 +14,11 @@ namespace tmrw {
 using Channel = boost::asio::experimental::channel<void(boost::system::error_code, GenericModuleData)>;
 
 /**
+ * Defines a type for a container that holds all channels
+ */
+using ChannelMap = std::map<std::string, std::shared_ptr<Channel>>;
+
+/**
  * This struct represents the Channels that will be passed into any module.
  */
 struct Channels {

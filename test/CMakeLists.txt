@@ -41,3 +41,13 @@ add_executable(strand_tests strand_tests.cpp)
 target_link_libraries(strand_tests PRIVATE Catch2::Catch2WithMain tomorrow_framework::tomorrow_framework)
 target_compile_features(strand_tests INTERFACE cxx_std_23)
 add_test(NAME StrandTests COMMAND strand_tests)
+
+add_executable(config_tests config_tests.cpp)
+target_link_libraries(config_tests PRIVATE Catch2::Catch2WithMain tomorrow_framework::tomorrow_framework)
+target_compile_features(config_tests INTERFACE cxx_std_23)
+add_test(NAME ConfigTests COMMAND config_tests)
+
+add_executable(factory_tests factory_tests.cpp)
+target_link_libraries(factory_tests PRIVATE Catch2::Catch2WithMain tomorrow_framework::tomorrow_framework)
+target_compile_features(factory_tests INTERFACE cxx_std_23)
+add_test(NAME FactoryTests COMMAND factory_tests)

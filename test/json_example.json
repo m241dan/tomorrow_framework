@@ -1,0 +1,38 @@
+{
+  "thread_pool_size": 1,
+  "channels": [
+    {"name": "timer channel", "size": 1000},
+    {"name": "input channel", "size": 1000},
+    {"name": "output channel", "size": 1000},
+    {"name": "final channel", "size": 1000},
+    {"name": "synchronizer", "size": 0},
+    {"name": "lock", "size": 1}
+  ],
+  "timers": [
+    {
+      "name": "input timer",
+      "config": {},
+      "outputs": ["timer channel"]
+    }
+  ],
+  "strands": ["one", "two"],
+  "modules": [
+    {
+      "name": "input producer",
+      "config": {},
+      "inputs": ["timer channel"],
+      "outputs": {
+        1: ["input channel"]
+      }
+    },
+    {
+      "name": "output producer",
+      "config": {},
+      "inputs": ["input channel"],
+      "outputs": {
+        1: ["final channel"]
+      }
+    }
+  ]
+}
+
